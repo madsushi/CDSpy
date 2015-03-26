@@ -1,0 +1,9 @@
+## Interface: 75000
+## Title: CDSpy
+## Notes: Announces stuff
+## SavedVariables: CDSpyStatusDB
+## SavedVariablesPerCharacter: CDSpyDB
+## Author: Madsushi & Perfect
+## Version: .0.0.1
+
+CDSpy.lua
