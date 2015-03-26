@@ -1441,27 +1441,6 @@ end
 function CDSpy:CheckEnable(isEnteringWorld)
   _, instance = IsInInstance()
   if instance == "raid" or instance == "party" then
-    if isEnteringWorld then
-      local tank_found = false
-      local max_group = 5 - select(3,GetInstanceInfo()) % 2 * 3
-      if instance == "raid" then
-        for i=1,40 do
-          local name, _, group = GetRaidRosterInfo(i)
-          if name and group <= max_group and is_tank(name) then
-            tank_found = true
-            break
-          end
-        end
-      elseif instance == "party" then
-        for i=1,5 do
-          local name = UnitName(i < 5 and format("party%d", i) or "player")
-          if name and is_tank(name) then
-            tank_found = true
-            break
-          end
-        end
-      end
-    end
     self:RegisterEvents()
   else
     self:UnregisterEvents()
