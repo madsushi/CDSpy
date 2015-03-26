@@ -650,6 +650,19 @@ local SpellArray = {
 --  HealerCriteria = ,
     
   },
+  
+  [115310] = {
+--  Monk
+--  Revival
+    SpellID = "115310",
+    CastCriteria = "SPELL_CAST_SUCCESS",
+    CastAnnounce = cast,
+--  FadeCriteria = ,
+--  FadeAnnounce = ,
+--  TankCriteria = ,
+--  HealerCriteria = ,
+    
+  },  
  
   [31850] = {
 --  Paladin
@@ -664,10 +677,10 @@ local SpellArray = {
     
   },
  
-  [86150] = {
+  [86659] = {
 --  Paladin
---  Guardian of the Ancient Kings
-    SpellID = "86150",
+--  Guardian of Ancient Kings
+    SpellID = "86659",
     CastCriteria = "SPELL_CAST_SUCCESS",
     CastAnnounce = cast,
     FadeCriteria = "SPELL_AURA_REMOVED",
@@ -912,10 +925,10 @@ local SpellArray = {
     
   },
  
-  [114049] = {
+  [114052] = {
 --  Shaman
 --  Ascendance
-    SpellID = "114049",
+    SpellID = "114052",
     CastCriteria = "SPELL_CAST_SUCCESS",
     CastAnnounce = cast,
     FadeCriteria = "SPELL_AURA_REMOVED",
@@ -1122,10 +1135,10 @@ local SpellArray = {
     
   },
  
-  [37486] = {
+  [355] = {
 --  Warrior
 --  Taunt
-    SpellID = "37486",
+    SpellID = "355",
     CastCriteria = "SPELL_CAST_SUCCESS",
     CastAnnounce = cast,
 --  FadeCriteria = ,
