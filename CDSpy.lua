@@ -1461,17 +1461,6 @@ function CDSpy:CheckEnable(isEnteringWorld)
           end
         end
       end
-      if not tank_found then
-        if instance == "party" then
-          printf("It is required that the tank is assigned |TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES:14:14:0:0:64:64:0:17:22:41|t in order for his/her cooldowns to be announced.")
-        elseif max_group == 5 then
-          printf("It is required that tanks (in groups 1 to 5) are assigned |TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES:14:14:0:0:64:64:0:17:22:41|t or promoted |TInterface\\GroupFrame\\UI-Group-MainTankIcon:16:10:0:1:16:16:1:13:0:16|t in order for their cooldowns to be announced.")
-        elseif max_group == 2 then
-          printf("It is required that tanks (in groups 1 and 2) are assigned |TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES:14:14:0:0:64:64:0:17:22:41|t or promoted |TInterface\\GroupFrame\\UI-Group-MainTankIcon:16:10:0:1:16:16:1:13:0:16|t in order for their cooldowns to be announced.")
-        else
-          printf("It is required that tanks are assigned |TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES:14:14:0:0:64:64:0:17:22:41|t or promoted |TInterface\\GroupFrame\\UI-Group-MainTankIcon:16:10:0:1:16:16:1:13:0:16|t in order for their cooldowns to be announced.")
-        end
-      end
     end
     self:RegisterEvents()
   else
@@ -1486,7 +1475,7 @@ end
 function CDSpy:RegisterEvents()
   self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
   self:RegisterEvent("PLAYER_REGEN_DISABLED")
-  print("CDSpy REGISTERED")
+  print("CDSpy is ONLINE in this zone")
   channel_id = GetChannelName(self.db.channel1)
   party_channel_id = GetChannelName(self.db.channel2)
 end
@@ -1495,7 +1484,7 @@ function CDSpy:UnregisterEvents()
   self:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
   self:UnregisterEvent("PLAYER_REGEN_DISABLED")
   self:UnregisterEvent("UNIT_HEALTH")
-  print("CDSpy UNREGISTERED")
+  print("CDSpy is OFFLINE in this zone")
   wipe(reincarnations)
 end
 
