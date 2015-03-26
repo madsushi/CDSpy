@@ -41,8 +41,10 @@ local fade              = "%s's %s fades!"          -- generic raid-wide style
 --Soulstone -- died with a stone, not cast on someone
 
 local _, instance
-local channel_id, party_channel_id
+local raid_channel_id, party_channel_id, pug_channel_id
 local sacrifice, soulstones, reincarnations = {}, {}, {}
+local raid_toggle, party_toggle, pug_toggle, taunt_toggle
+local override
 
 -- Upvalues
 local UnitAffectingCombat, UnitName, UnitHealthMax, UnitManaMax, UnitExists = UnitAffectingCombat, UnitName, UnitHealthMax, UnitManaMax, UnitExists
@@ -139,6 +141,7 @@ local SpellArray = {
 --  FadeAnnounce = ,
     TankCriteria = true,
 --  HealerCriteria = ,
+    TauntCriteria = true,
     
   },
  
@@ -230,6 +233,7 @@ local SpellArray = {
 --  FadeAnnounce = ,
 --  TankCriteria = ,
 --  HealerCriteria = ,
+    TauntCriteria = true,
     
   },
  
@@ -648,6 +652,7 @@ local SpellArray = {
 --  FadeAnnounce = ,
 --  TankCriteria = ,
 --  HealerCriteria = ,
+    TauntCriteria = true,
     
   },
   
@@ -792,6 +797,7 @@ local SpellArray = {
 --  FadeAnnounce = ,
 --  TankCriteria = ,
 --  HealerCriteria = ,
+    TauntCriteria = true,
     
   },
  
@@ -1145,6 +1151,7 @@ local SpellArray = {
 --  FadeAnnounce = ,
 --  TankCriteria = ,
 --  HealerCriteria = ,
+    TauntCriteria = true,
     
   },
  
@@ -1340,12 +1347,18 @@ CDSpy:SetScript("OnEvent", function(self, event, ...)
 end)
 
 local function send(message)
-  if instance == "raid" then
+  if instance == "raid" and not IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and raid_toggle then
     --print(message)
-    SendChatMessage(message, "RAID", nil, channel_id)
-  elseif instance == "party" then
+    SendChatMessage(message, raid_output, nil, raid_channel_id)
+    
+  elseif instance == "party" and not IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and party_toggle then
     --print(message)
-    SendChatMessage(message, "PARTY", nil, party_channel_id)
+    SendChatMessage(message, party_output, nil, party_channel_id)
+    
+  elseif instance ~= "pvp" and instance ~= "arena" and IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and pug_toggle then
+    --print(message)
+    SendChatMessage(message, pug_output, nil, pug_channel_id)
+    
   end
 end
  
@@ -1368,14 +1381,16 @@ function CDSpy:COMBAT_LOG_EVENT_UNFILTERED(timestamp, event, hideCaster, srcGUID
     
       if event == SpellArray[spellID]["CastCriteria"] then
       
+        if taunt_toggle == false and SpellArray[spellID]["TauntCriteria"] then return end
+      
         if SpellArray[spellID]["TankCriteria"] then
         
           if is_tank(srcName) == SpellArray[spellID]["TankCriteria"] then
-
+            
             send(SpellArray[spellID]["CastAnnounce"]:format(srcName, GetSpellLink(spellID), destName))
-          
+              
           end
-        
+            
         elseif SpellArray[spellID]["HealerCriteria"] then
         
           if is_healer(srcName) == SpellArray[spellID]["HealerCriteria"] then
@@ -1442,6 +1457,8 @@ function CDSpy:CheckEnable(isEnteringWorld)
   _, instance = IsInInstance()
   if instance == "raid" or instance == "party" then
     self:RegisterEvents()
+  elseif override then
+    self:RegisterEvents()
   else
     self:UnregisterEvents()
   end
@@ -1455,8 +1472,9 @@ function CDSpy:RegisterEvents()
   self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
   self:RegisterEvent("PLAYER_REGEN_DISABLED")
   print("CDSpy is ONLINE in this zone")
-  channel_id = GetChannelName(self.db.channel1)
-  party_channel_id = GetChannelName(self.db.channel2)
+  raid_channel_id = GetChannelName(self.db.raid_channel_id)
+  party_channel_id = GetChannelName(self.db.party_channel_id)
+  pug_channel_id = GetChannelName(self.db.pug_channel_id)
 end
 
 function CDSpy:UnregisterEvents()
@@ -1472,16 +1490,22 @@ function CDSpy:ADDON_LOADED(addon)
   if addon ~= "CDSpy" then return end
   
   local defaults = {
-    lfr = true,
+    override = false,
+    taunt_toggle = false,
     party = true,
     fade = true,
     tricks = true,
     manacd = true,
     mana = 80000,
-    output1 = "RAID",
-    channel1 = "CDSpyReports",
-    output2 = "PARTY",    
-    channel2 = "CDSpyReports",
+    raid_output = "RAID",
+    raid_channel_id = "CDSpyReports",
+    raid_toggle = true,
+    party_output = "PARTY",    
+    party_channel_id = "CDSpyReports",
+    party_toggle = true,
+    pug_output = "INSTANCE_CHAT",    
+    pug_channel_id = "CDSpyReports",
+    pug_toggle = false,
   }
   
   local global_defaults = {
