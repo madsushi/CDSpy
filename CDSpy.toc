@@ -4,6 +4,6 @@
 ## SavedVariables: CDSpyStatusDB
 ## SavedVariablesPerCharacter: CDSpyDB
 ## Author: Madsushi & Perfect
-## Version: .0.0.1
+## Version: 0.0.1
 
 CDSpy.lua
