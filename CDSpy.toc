@@ -7,3 +7,5 @@
 ## Version: 0.0.1
 
 CDSpy.lua
+CDSpy.xml
+CDSpyConfig.lua
