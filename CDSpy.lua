@@ -1,4 +1,13 @@
 local CDSpy = CreateFrame("Frame")
+local addonName, addon = ...
+
+--_G[addonName] = addon
+addon.healthCheck = true
+
+local eventFrame = CreateFrame("Frame", nil, InterfaceOptionsFramePanelContainer)
+eventFrame:RegisterEvent("ADDON_LOADED")
+eventFrame:RegisterEvent("PLAYER_LOGIN")
+addon.frame = eventFrame
 
 -- CastAnnounce
 local cast              = "%s casts %s!"
@@ -1347,19 +1356,21 @@ CDSpy:SetScript("OnEvent", function(self, event, ...)
 end)
 
 local function send(message)
-  if instance == "raid" and not IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and raid_toggle then
+  if instance == "raid" and not IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and CDSpyDB.raid_toggle then
     --print(message)
-    SendChatMessage(message, raid_output, nil, raid_channel_id)
+    SendChatMessage(message, CDSpyDB.raid_output, nil, CDSpyDB.raid_channel_id)
     
-  elseif instance == "party" and not IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and party_toggle then
+  elseif instance == "party" and not IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and CDSpyDB.party_toggle then
     --print(message)
-    SendChatMessage(message, party_output, nil, party_channel_id)
+    SendChatMessage(message, CDSpyDB.party_output, nil, CDSpyDB.party_channel_id)
     
-  elseif instance ~= "pvp" and instance ~= "arena" and IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and pug_toggle then
+  elseif instance ~= "pvp" and instance ~= "arena" and IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and CDSpyDB.pug_toggle then
     --print(message)
-    SendChatMessage(message, pug_output, nil, pug_channel_id)
-    
+    SendChatMessage(message, CDSpyDB.pug_output, nil, CDSpyDB.pug_channel_id)
   end
+  
+  --SendChatMessage(message, "guild", nil, "cake")
+  
 end
  
 
@@ -1381,7 +1392,7 @@ function CDSpy:COMBAT_LOG_EVENT_UNFILTERED(timestamp, event, hideCaster, srcGUID
     
       if event == SpellArray[spellID]["CastCriteria"] then
       
-        if taunt_toggle == false and SpellArray[spellID]["TauntCriteria"] then return end
+        if CDSpyDB.taunt_toggle == false and SpellArray[spellID]["TauntCriteria"] then return end
       
         if SpellArray[spellID]["TankCriteria"] then
         
@@ -1457,7 +1468,7 @@ function CDSpy:CheckEnable(isEnteringWorld)
   _, instance = IsInInstance()
   if instance == "raid" or instance == "party" then
     self:RegisterEvents()
-  elseif override then
+  elseif CDSpyDB.override then
     self:RegisterEvents()
   else
     self:UnregisterEvents()
@@ -1472,9 +1483,9 @@ function CDSpy:RegisterEvents()
   self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
   self:RegisterEvent("PLAYER_REGEN_DISABLED")
   print("CDSpy is ONLINE in this zone")
-  raid_channel_id = GetChannelName(self.db.raid_channel_id)
-  party_channel_id = GetChannelName(self.db.party_channel_id)
-  pug_channel_id = GetChannelName(self.db.pug_channel_id)
+  raid_channel_id = GetChannelName(CDSpyDB.raid_channel_id)
+  party_channel_id = GetChannelName(CDSpyDB.party_channel_id)
+  pug_channel_id = GetChannelName(CDSpyDB.pug_channel_id)
 end
 
 function CDSpy:UnregisterEvents()
@@ -1485,13 +1496,23 @@ function CDSpy:UnregisterEvents()
   wipe(reincarnations)
 end
 
-function CDSpy:ADDON_LOADED(addon)
+function CDSpy:CreateSlashCommands()
 
-  if addon ~= "CDSpy" then return end
+	SLASH_CDSPY1 = "/cdspy"
+	SlashCmdList.CDSPY = function(msg)
+    InterfaceOptionsFrame_OpenToCategory("CDSpy")
+    InterfaceOptionsFrame_OpenToCategory("CDSpy")
+  end
+	
+end
+
+function CDSpy:ADDON_LOADED(loadedAddon)
+
+  if loadedAddon ~= "CDSpy" then return end
   
   local defaults = {
-    override = false,
-    taunt_toggle = false,
+    override = true,
+    taunt_toggle = true,
     party = true,
     fade = true,
     tricks = true,
@@ -1527,11 +1548,13 @@ function CDSpy:ADDON_LOADED(addon)
   end
   
   self.db = CDSpyDB
-  
---self:CreateSlashCommands()
+  addon.db = CDSpyDB
+ 
+  self:CreateSlashCommands()
   self:CheckEnable()
   self:RegisterEvent("PLAYER_ENTERING_WORLD")
   
 end
+
 
 CDSpy:RegisterEvent("ADDON_LOADED")

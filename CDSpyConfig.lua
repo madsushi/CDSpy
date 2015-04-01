@@ -44,6 +44,26 @@ frame:SetScript("OnShow", function(frame)
 		function(self, value) CDSpyDB.pug_toggle = value end)
   pug_toggle_box:SetChecked(CDSpyDB.pug_toggle)
 	pug_toggle_box:SetPoint("TOPLEFT", taunt_toggle_box, "BOTTOMLEFT", 0, -8)
+  
+  local info = {}
+  local raidChannelDropdown = CreateFrame("Frame", "CDSpyRaidChannel", frame, "UIDropDownMenuTemplate")
+  raidChannelDropdown:SetPoint("TOPLEFT", pug_toggle_box, "BOTTOMLEFT", -15, -10)
+  raidChannelDropdown.initialize = function()
+    wipe(info)
+    local channels = {"RAID", "PARTY", "INSTANCE_CHAT", "GUILD", "SAY"}
+    local names = {"RAID", "PARTY", "INSTANCE", "GUILD", "SAY"}
+    for i, channel in next, channels do
+      info.text = names[i]
+      info.value = channel
+      info.func = function(self)
+        CDSpyDB.raid_output = self.value
+        CDSpyRaidChannelText:SetText(self:GetText())
+      end
+      info.checked = channel == CDSpyDB.raid_output
+      UIDropDownMenu_AddButton(info)
+    end
+  end
+  CDSpyRaidChannelText:SetText("Raid Output Channel")
 
 
 	frame:SetScript("OnShow", nil)
