@@ -1357,19 +1357,16 @@ end)
 
 local function send(message)
   if instance == "raid" and not IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and CDSpyDB.raid_toggle then
-    --print(message)
     SendChatMessage(message, CDSpyDB.raid_output, nil, CDSpyDB.raid_channel_id)
-    
   elseif instance == "party" and not IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and CDSpyDB.party_toggle then
-    --print(message)
     SendChatMessage(message, CDSpyDB.party_output, nil, CDSpyDB.party_channel_id)
-    
   elseif instance ~= "pvp" and instance ~= "arena" and IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and CDSpyDB.pug_toggle then
-    --print(message)
     SendChatMessage(message, CDSpyDB.pug_output, nil, CDSpyDB.pug_channel_id)
   end
   
-  --SendChatMessage(message, "guild", nil, "cake")
+  if CDSpyDB.debug_toggle then
+    print(message)
+  end
   
 end
  
@@ -1466,13 +1463,17 @@ end
 
 function CDSpy:CheckEnable(isEnteringWorld)
   _, instance = IsInInstance()
-  if instance == "raid" or instance == "party" then
-    self:RegisterEvents()
+  
+  if CDSpyDB.enable_toggle then
+    if instance == "raid" or instance == "party" then
+      self:RegisterEvents()
+    end
   elseif CDSpyDB.override then
     self:RegisterEvents()
   else
     self:UnregisterEvents()
   end
+  
 end
 
 function CDSpy:PLAYER_ENTERING_WORLD()
@@ -1512,6 +1513,8 @@ function CDSpy:ADDON_LOADED(loadedAddon)
   
   local defaults = {
     override = true,
+    enable_toggle = true,
+    debug_toggle = true,
     taunt_toggle = true,
     party = true,
     fade = true,
@@ -1529,21 +1532,10 @@ function CDSpy:ADDON_LOADED(loadedAddon)
     pug_toggle = false,
   }
   
-  local global_defaults = {
-    enabled = true,
-  }
-  
   CDSpyDB = CDSpyDB or {}
   for k,v in pairs(defaults) do
     if CDSpyDB[k] == nil then
       CDSpyDB[k] = v
-    end
-  end
-  
-  CDSpyStatusDB = CDSpyStatusDB or {}
-  for k,v in pairs(global_defaults) do
-    if CDSpyStatusDB[k] == nil then
-      CDSpyStatusDB[k] = v
     end
   end
   
