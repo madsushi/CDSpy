@@ -104,8 +104,8 @@ frame:SetScript("OnShow", function(frame)
   raidChannelDropdown:SetPoint("TOPLEFT", pug_toggle_box, "BOTTOMLEFT", -15, -10)
   raidChannelDropdown.initialize = function()
     wipe(info)
-    local channels = {"RAID", "PARTY", "INSTANCE_CHAT", "GUILD", "SAY"}
-    local names = {"RAID", "PARTY", "INSTANCE", "GUILD", "SAY"}
+    local channels = {"RAID", "PARTY", "INSTANCE_CHAT", "GUILD", "SAY", "CHANNEL"}
+    local names = {"RAID", "PARTY", "INSTANCE", "GUILD", "SAY", "CHANNEL"}
     for i, channel in next, channels do
       info.text = names[i]
       info.value = channel
@@ -118,6 +118,12 @@ frame:SetScript("OnShow", function(frame)
     end
   end
   CDSpyRaidChannelText:SetText("Raid Output")
+  
+  
+  
+  local raid_channel_label = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+	raid_channel_label:SetPoint("TOPLEFT", raidChannelDropdown, 20, -35)
+	raid_channel_label:SetText("Custom Raid Channel")
   
   
   
@@ -141,7 +147,7 @@ frame:SetScript("OnShow", function(frame)
   end
   
   
-	raid_channel_id_box:SetPoint("TOPLEFT", pug_toggle_box, "BOTTOMLEFT", 8, -50)
+	raid_channel_id_box:SetPoint("TOPLEFT", raidChannelDropdown, "BOTTOMLEFT", 25, -20)
   raid_channel_id_box:SetSize(125, 20)
   raid_channel_id_box:SetAutoFocus(false)
 	raid_channel_id_box:SetScript("OnShow", frame.update)
@@ -172,7 +178,9 @@ frame:SetScript("OnShow", function(frame)
   CDSpyPartyChannelText:SetText("Party Output")
   
   
-  
+  local party_channel_label = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+	party_channel_label:SetPoint("TOPLEFT", partyChannelDropdown, 20, -35)
+	party_channel_label:SetText("Custom Party Channel")
   
   
   local party_channel_id_box = CreateFrame("EditBox", "CDSpyPartyChannelID", frame, "InputBoxTemplate")
@@ -195,7 +203,7 @@ frame:SetScript("OnShow", function(frame)
   end
   
   
-	party_channel_id_box:SetPoint("TOPLEFT", pug_toggle_box, "BOTTOMLEFT", 8, -50)
+	party_channel_id_box:SetPoint("TOPLEFT", partyChannelDropdown, "BOTTOMLEFT", 25, -20)
   party_channel_id_box:SetSize(125, 20)
   party_channel_id_box:SetAutoFocus(false)
 	party_channel_id_box:SetScript("OnShow", frame.update)
@@ -225,6 +233,11 @@ frame:SetScript("OnShow", function(frame)
   CDSpyPugChannelText:SetText("LFR Output")
   
   
+  local pug_channel_label = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+	pug_channel_label:SetPoint("TOPLEFT", pugChannelDropdown, 20, -35)
+	pug_channel_label:SetText("Custom PUG Channel")
+  
+  
   local pug_channel_id_box = CreateFrame("EditBox", "CDSpyPugChannelID", frame, "InputBoxTemplate")
   
   function pug_channel_id_box:OnEditFocusGained()
@@ -245,7 +258,7 @@ frame:SetScript("OnShow", function(frame)
   end
   
   
-	pug_channel_id_box:SetPoint("TOPLEFT", pug_toggle_box, "BOTTOMLEFT", 8, -50)
+	pug_channel_id_box:SetPoint("TOPLEFT", pugChannelDropdown, "BOTTOMLEFT", 25, -20)
   pug_channel_id_box:SetSize(125, 20)
   pug_channel_id_box:SetAutoFocus(false)
 	pug_channel_id_box:SetScript("OnShow", frame.update)
