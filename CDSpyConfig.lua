@@ -19,6 +19,24 @@ frame:SetScript("OnShow", function(frame)
 		check.tooltipRequirement = description
 		return check
 	end
+  
+  local function CheckEditBoxRaid(self)
+    local msg = self:GetText()
+    CDSpyDB.raid_channel_id = msg
+    options.update()
+  end
+  
+  local function CheckEditBoxParty(self)
+    local msg = self:GetText()
+    CDSpyDB.party_channel_id = msg
+    options.update()
+  end
+  
+  local function CheckEditBoxPug(self)
+    local msg = self:GetText()
+    CDSpyDB.pug_channel_id = msg
+    options.update()
+  end
 
   -- fancy "CDSpy" in the top left
 	local title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
@@ -101,12 +119,45 @@ frame:SetScript("OnShow", function(frame)
   end
   CDSpyRaidChannelText:SetText("Raid Output")
   
+  
+  
+  local raid_channel_id_box = CreateFrame("EditBox", "CDSpyRaidChannelID", frame, "InputBoxTemplate")
+  
+  function raid_channel_id_box:OnEditFocusGained()
+    self.value = self:GetValue()
+  end
+
+  function raid_channel_id_box:OnEnterPressed()
+    local value = self:GetValue()
+    self:CDSpy('OnTextChanged', value)
+    self:CDSpy('OnInput', value)
+    self:CDSpy('OnUpdate')
+    self:ClearFocus()
+  end
+
+  function raid_channel_id_box:OnEscapePressed()
+    self:SetValue(self.value or '')
+    self:ClearFocus()
+  end
+  
+  
+	raid_channel_id_box:SetPoint("TOPLEFT", pug_toggle_box, "BOTTOMLEFT", 8, -50)
+  raid_channel_id_box:SetSize(125, 20)
+  raid_channel_id_box:SetAutoFocus(false)
+	raid_channel_id_box:SetScript("OnShow", frame.update)
+	raid_channel_id_box:SetScript("OnEnterPressed", CheckEditBoxRaid)
+  raid_channel_id_box:SetText(CDSpyDB.raid_channel_id)
+  
+  
+
+
+  
   local partyChannelDropdown = CreateFrame("Frame", "CDSpyPartyChannel", frame, "UIDropDownMenuTemplate")
   partyChannelDropdown:SetPoint("LEFT", raidChannelDropdown, "RIGHT", 150, 0)
   partyChannelDropdown.initialize = function()
     wipe(info)
-    local channels = {"RAID", "PARTY", "INSTANCE_CHAT", "GUILD", "SAY"}
-    local names = {"RAID", "PARTY", "INSTANCE", "GUILD", "SAY"}
+    local channels = {"RAID", "PARTY", "INSTANCE_CHAT", "GUILD", "SAY", "CHANNEL"}
+    local names = {"RAID", "PARTY", "INSTANCE", "GUILD", "SAY", "CHANNEL"}
     for i, channel in next, channels do
       info.text = names[i]
       info.value = channel
@@ -120,12 +171,46 @@ frame:SetScript("OnShow", function(frame)
   end
   CDSpyPartyChannelText:SetText("Party Output")
   
+  
+  
+  
+  
+  local party_channel_id_box = CreateFrame("EditBox", "CDSpyPartyChannelID", frame, "InputBoxTemplate")
+  
+  function party_channel_id_box:OnEditFocusGained()
+    self.value = self:GetValue()
+  end
+
+  function party_channel_id_box:OnEnterPressed()
+    local value = self:GetValue()
+    self:CDSpy('OnTextChanged', value)
+    self:CDSpy('OnInput', value)
+    self:CDSpy('OnUpdate')
+    self:ClearFocus()
+  end
+
+  function party_channel_id_box:OnEscapePressed()
+    self:SetValue(self.value or '')
+    self:ClearFocus()
+  end
+  
+  
+	party_channel_id_box:SetPoint("TOPLEFT", pug_toggle_box, "BOTTOMLEFT", 8, -50)
+  party_channel_id_box:SetSize(125, 20)
+  party_channel_id_box:SetAutoFocus(false)
+	party_channel_id_box:SetScript("OnShow", frame.update)
+	party_channel_id_box:SetScript("OnEnterPressed", CheckEditBoxParty)
+  party_channel_id_box:SetText(CDSpyDB.party_channel_id)
+  
+  
+  
+  
   local pugChannelDropdown = CreateFrame("Frame", "CDSpyPugChannel", frame, "UIDropDownMenuTemplate")
   pugChannelDropdown:SetPoint("LEFT", partyChannelDropdown, "RIGHT", 150, 0)
   pugChannelDropdown.initialize = function()
     wipe(info)
-    local channels = {"RAID", "PARTY", "INSTANCE_CHAT", "GUILD", "SAY"}
-    local names = {"RAID", "PARTY", "INSTANCE", "GUILD", "SAY"}
+    local channels = {"RAID", "PARTY", "INSTANCE_CHAT", "GUILD", "SAY", "CHANNEL"}
+    local names = {"RAID", "PARTY", "INSTANCE", "GUILD", "SAY", "CHANNEL"}
     for i, channel in next, channels do
       info.text = names[i]
       info.value = channel
@@ -139,6 +224,33 @@ frame:SetScript("OnShow", function(frame)
   end
   CDSpyPugChannelText:SetText("LFR Output")
   
+  
+  local pug_channel_id_box = CreateFrame("EditBox", "CDSpyPugChannelID", frame, "InputBoxTemplate")
+  
+  function pug_channel_id_box:OnEditFocusGained()
+    self.value = self:GetValue()
+  end
+
+  function pug_channel_id_box:OnEnterPressed()
+    local value = self:GetValue()
+    self:CDSpy('OnTextChanged', value)
+    self:CDSpy('OnInput', value)
+    self:CDSpy('OnUpdate')
+    self:ClearFocus()
+  end
+
+  function pug_channel_id_box:OnEscapePressed()
+    self:SetValue(self.value or '')
+    self:ClearFocus()
+  end
+  
+  
+	pug_channel_id_box:SetPoint("TOPLEFT", pug_toggle_box, "BOTTOMLEFT", 8, -50)
+  pug_channel_id_box:SetSize(125, 20)
+  pug_channel_id_box:SetAutoFocus(false)
+	pug_channel_id_box:SetScript("OnShow", frame.update)
+	pug_channel_id_box:SetScript("OnEnterPressed", CheckEditBoxPug)
+  pug_channel_id_box:SetText(CDSpyDB.pug_channel_id)
   
 
 

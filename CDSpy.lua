@@ -1356,11 +1356,11 @@ CDSpy:SetScript("OnEvent", function(self, event, ...)
 end)
 
 local function send(message)
-  if instance == "raid" and not IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and CDSpyDB.raid_toggle then
+  if instance == "raid" and not IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and (CDSpyDB.raid_toggle or CDSpyDB.override) then
     SendChatMessage(message, CDSpyDB.raid_output, nil, CDSpyDB.raid_channel_id)
-  elseif instance == "party" and not IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and CDSpyDB.party_toggle then
+  elseif instance == "party" and not IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and (CDSpyDB.party_toggle or CDSpyDB.override) then
     SendChatMessage(message, CDSpyDB.party_output, nil, CDSpyDB.party_channel_id)
-  elseif (select(3,GetInstanceInfo())==17 or IsLFGModeActive(LE_LFG_CATEGORY_LFD)) and CDSpyDB.pug_toggle then
+  elseif (select(3,GetInstanceInfo())==17 or IsLFGModeActive(LE_LFG_CATEGORY_LFD)) and (CDSpyDB.pug_toggle or CDSpyDB.override) then
     SendChatMessage(message, CDSpyDB.pug_output, nil, CDSpyDB.pug_channel_id)
   elseif CDSpyDB.override then
     SendChatMessage(message, CDSpyDB.raid_output, nil, CDSpyDB.raid_channel_id)
