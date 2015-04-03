@@ -20,9 +20,28 @@ frame:SetScript("OnShow", function(frame)
 		return check
 	end
 
+  -- fancy "CDSpy" in the top left
 	local title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
 	title:SetPoint("TOPLEFT", 16, -16)
 	title:SetText(addonName)
+  
+  -- authors info
+  local author_label = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+	author_label:SetPoint("TOPLEFT", title, 0, -32)
+	author_label:SetText("Authors:")
+  
+  local author_info = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+	author_info:SetPoint("TOPLEFT",author_label,"TOPRIGHT",4,0)
+	author_info:SetText("Madsushi and Perfect, Mal'Ganis-US")
+
+  -- emaiil info
+  local email_label = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+	email_label:SetPoint("TOPLEFT", author_label, 0, -16)
+	email_label:SetText("Email:")
+  
+  local email_info = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+	email_info:SetPoint("TOPLEFT",email_label,"TOPRIGHT",4,0)
+	email_info:SetText("madsushi@gmail.com")
 
 	local override_box = newCheckbox(
 		"Override (requires reload)",
@@ -32,7 +51,7 @@ frame:SetScript("OnShow", function(frame)
       ReloadUI()
     end)
 	override_box:SetChecked(CDSpyDB.override)
-	override_box:SetPoint("TOPLEFT", title, "BOTTOMLEFT", -2, -16)
+	override_box:SetPoint("TOPLEFT", email_label, "BOTTOMLEFT", -2, -16)
   
   local debug_box = newCheckbox(
 		"Enable debug mode",

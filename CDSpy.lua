@@ -1104,7 +1104,7 @@ local SpellArray = {
     CastAnnounce = cast_on,
     FadeCriteria = "SPELL_AURA_REMOVED",
     FadeAnnounce = fade_from_target,
---  TankCriteria = ,
+    TankCriteria = true,
 --  HealerCriteria = ,
    
   },
@@ -1360,8 +1360,10 @@ local function send(message)
     SendChatMessage(message, CDSpyDB.raid_output, nil, CDSpyDB.raid_channel_id)
   elseif instance == "party" and not IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and CDSpyDB.party_toggle then
     SendChatMessage(message, CDSpyDB.party_output, nil, CDSpyDB.party_channel_id)
-  elseif instance ~= "pvp" and instance ~= "arena" and IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and CDSpyDB.pug_toggle then
+  elseif (select(3,GetInstanceInfo())==17 or IsLFGModeActive(LE_LFG_CATEGORY_LFD)) and CDSpyDB.pug_toggle then
     SendChatMessage(message, CDSpyDB.pug_output, nil, CDSpyDB.pug_channel_id)
+  elseif CDSpyDB.override then
+    SendChatMessage(message, CDSpyDB.raid_output, nil, CDSpyDB.raid_channel_id)
   end
   
   if CDSpyDB.debug_toggle then
@@ -1468,6 +1470,8 @@ function CDSpy:CheckEnable(isEnteringWorld)
     if instance == "raid" or instance == "party" then
       self:RegisterEvents()
     end
+  elseif CDSpyDB.pug_toggle then
+  
   elseif CDSpyDB.override then
     self:RegisterEvents()
   else

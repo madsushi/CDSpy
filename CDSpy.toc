@@ -1,11 +1,10 @@
 ## Interface: 75000
 ## Title: CDSpy
-## Notes: Announces stuff
+## Notes: Announces cooldowns and abilities to chat channels
 ## SavedVariables: CDSpyStatusDB
 ## SavedVariablesPerCharacter: CDSpyDB
 ## Author: Madsushi & Perfect
-## Version: 0.0.1
+## Version: 0.5.0
 
 CDSpy.lua
-CDSpy.xml
 CDSpyConfig.lua
