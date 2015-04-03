@@ -22,19 +22,22 @@ frame:SetScript("OnShow", function(frame)
   
   local function CheckEditBoxRaid(self)
     local msg = self:GetText()
-    CDSpyDB.raid_channel_id = msg
+    CDSpyDB.raid_channel_name = msg
+    CDSpyDB.raid_channel_id = GetChannelName(msg)
     options.update()
   end
   
   local function CheckEditBoxParty(self)
     local msg = self:GetText()
-    CDSpyDB.party_channel_id = msg
+    CDSpyDB.party_channel_name = msg
+    CDSpyDB.party_channel_id = GetChannelName(msg)
     options.update()
   end
   
   local function CheckEditBoxPug(self)
     local msg = self:GetText()
-    CDSpyDB.pug_channel_id = msg
+    CDSpyDB.pug_channel_name = msg
+    CDSpyDB.pug_channel_id = GetChannelName(msg)
     options.update()
   end
 
@@ -152,7 +155,9 @@ frame:SetScript("OnShow", function(frame)
   raid_channel_id_box:SetAutoFocus(false)
 	raid_channel_id_box:SetScript("OnShow", frame.update)
 	raid_channel_id_box:SetScript("OnEnterPressed", CheckEditBoxRaid)
-  raid_channel_id_box:SetText(CDSpyDB.raid_channel_id)
+  raid_channel_id_box:SetScript("OnEditFocusLost", CheckEditBoxRaid)
+  raid_channel_id_box:SetScript("OnTextChanged", CheckEditBoxRaid)
+  raid_channel_id_box:SetText(CDSpyDB.raid_channel_name)
   
   
 
@@ -208,6 +213,8 @@ frame:SetScript("OnShow", function(frame)
   party_channel_id_box:SetAutoFocus(false)
 	party_channel_id_box:SetScript("OnShow", frame.update)
 	party_channel_id_box:SetScript("OnEnterPressed", CheckEditBoxParty)
+  party_channel_id_box:SetScript("OnEditFocusLost", CheckEditBoxParty)
+  party_channel_id_box:SetScript("OnTextChanged", CheckEditBoxParty)  
   party_channel_id_box:SetText(CDSpyDB.party_channel_id)
   
   
@@ -263,6 +270,8 @@ frame:SetScript("OnShow", function(frame)
   pug_channel_id_box:SetAutoFocus(false)
 	pug_channel_id_box:SetScript("OnShow", frame.update)
 	pug_channel_id_box:SetScript("OnEnterPressed", CheckEditBoxPug)
+  pug_channel_id_box:SetScript("OnEditFocusLost", CheckEditBoxPug)
+  pug_channel_id_box:SetScript("OnTextChanged", CheckEditBoxPug)
   pug_channel_id_box:SetText(CDSpyDB.pug_channel_id)
   
 

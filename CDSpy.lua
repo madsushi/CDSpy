@@ -1466,16 +1466,12 @@ end
 function CDSpy:CheckEnable(isEnteringWorld)
   _, instance = IsInInstance()
   
-  if CDSpyDB.enable_toggle then
-    if instance == "raid" or instance == "party" then
-      self:RegisterEvents()
-    end
-  elseif CDSpyDB.pug_toggle then
-  
+  if CDSpyDB.enable_toggle and (instance == "raid" or instance == "party") then
+    self:RegisterEvents()
   elseif CDSpyDB.override then
     self:RegisterEvents()
   else
-    self:UnregisterEvents()
+   self:UnregisterEvents()
   end
   
 end
@@ -1526,13 +1522,16 @@ function CDSpy:ADDON_LOADED(loadedAddon)
     manacd = true,
     mana = 80000,
     raid_output = "RAID",
-    raid_channel_id = "CDSpyReports",
+    raid_channel_id = "5",
+    raid_channel_name = "CDSpyReports",
     raid_toggle = true,
     party_output = "PARTY",    
-    party_channel_id = "CDSpyReports",
+    party_channel_id = "5",
+    party_channel_name = "CDSpyReports",
     party_toggle = true,
     pug_output = "INSTANCE_CHAT",    
-    pug_channel_id = "CDSpyReports",
+    pug_channel_id = "5",
+    pug_channel_name = "CDSpyReports",
     pug_toggle = false,
   }
   
