@@ -259,19 +259,19 @@ local SpellArray = {
     
   },
  
-  [172106] = {
+--  [172106] = { -- removed in 6.2
 --  Hunter
 --  Aspect of the Fox
-    SpellID = "172106",
-    CastCriteria = "SPELL_CAST_SUCCESS",
-    CastAnnounce = cast,
-    FadeCriteria = "SPELL_AURA_REMOVED",
-    FadeAnnounce = fade,
+--    SpellID = "172106",
+--    CastCriteria = "SPELL_CAST_SUCCESS",
+--    CastAnnounce = cast,
+--   FadeCriteria = "SPELL_AURA_REMOVED",
+--    FadeAnnounce = fade,
 --  TankCriteria = ,
 --  HealerCriteria = ,
-    SpamCriteria = true,
+--    SpamCriteria = true,
     
-  },
+--  },
  
   [34477] = {
 --  Hunter
@@ -585,19 +585,19 @@ local SpellArray = {
     
   },
  
-  [159916] = {
+--  [159916] = {
 --  Mage
 --  Amplify Magic
-    SpellID = "159916",
-    CastCriteria = "SPELL_CAST_SUCCESS",
-    CastAnnounce = cast,
-    FadeCriteria = "SPELL_AURA_REMOVED",
-    FadeAnnounce = fade,
+--    SpellID = "159916",
+--    CastCriteria = "SPELL_CAST_SUCCESS",
+--    CastAnnounce = cast,
+--    FadeCriteria = "SPELL_AURA_REMOVED",
+--    FadeAnnounce = fade,
 --  TankCriteria = ,
 --  HealerCriteria = ,
-    SpamCriteria = true,
+--    SpamCriteria = true,
     
-  },
+--  },
  
   [115203] = {
 --  Monk
@@ -1384,6 +1384,8 @@ end
 function CDSpy:COMBAT_LOG_EVENT_UNFILTERED(timestamp, event, hideCaster, srcGUID, srcName, srcFlags, srcRaidFlags, destGUID, destName, destFlags, destRaidFlags, spellID, spellName, school, ...)
  
   if not UnitExists(srcName) then return end -- If the source isn't in the raid/party
+  
+  if not CDSpyDB.enable_toggle then return end -- If Global Announce is off
  
   if UnitAffectingCombat(srcName) then -- If the caster is in combat
   

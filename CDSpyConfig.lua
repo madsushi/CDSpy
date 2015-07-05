@@ -24,21 +24,21 @@ frame:SetScript("OnShow", function(frame)
     local msg = self:GetText()
     CDSpyDB.raid_channel_name = msg
     CDSpyDB.raid_channel_id = GetChannelName(msg)
-    options.update()
+  --  options.update()
   end
   
   local function CheckEditBoxParty(self)
     local msg = self:GetText()
     CDSpyDB.party_channel_name = msg
     CDSpyDB.party_channel_id = GetChannelName(msg)
-    options.update()
+   -- options.update()
   end
   
   local function CheckEditBoxPug(self)
     local msg = self:GetText()
     CDSpyDB.pug_channel_name = msg
     CDSpyDB.pug_channel_id = GetChannelName(msg)
-    options.update()
+   -- options.update()
   end
 
   -- fancy "CDSpy" in the top left
@@ -82,8 +82,8 @@ frame:SetScript("OnShow", function(frame)
 	debug_box:SetPoint("TOPLEFT", override_box, "BOTTOMLEFT", 0, -8) 
   
 	local enable_box = newCheckbox(
-		"Enable Global announcements",
-		"hmm what does this do",
+		"Enable announcements (global)",
+		"If disabled, no announcements will go out, no reload needed",
 		function(self, value) CDSpyDB.enable_toggle = value end)
 	enable_box:SetChecked(CDSpyDB.enable_toggle)
 	enable_box:SetPoint("TOPLEFT", debug_box, "BOTTOMLEFT", 0, -8)  
