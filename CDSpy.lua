@@ -1344,6 +1344,66 @@ local SpellArray = {
 --  TankCriteria = ,
     
   },
+  
+  [187615] = {
+--  Item
+--  Maalus, the Blood Drinker
+    SpellID = "187615",
+    CastCriteria = "SPELL_CAST_SUCCESS",
+    CastAnnounce = beat,
+--  FadeCriteria = ,
+--  FadeAnnounce = ,
+--  TankCriteria = ,
+    
+  },
+
+  [187611] = {
+--  Item
+--  Nithramus, the All-Seer
+    SpellID = "187611",
+    CastCriteria = "SPELL_CAST_SUCCESS",
+    CastAnnounce = beat,
+--  FadeCriteria = ,
+--  FadeAnnounce = ,
+--  TankCriteria = ,
+    
+  },
+
+  [187612] = {
+--  Item
+--  Etheralus, the Eternal Reward
+    SpellID = "187612",
+    CastCriteria = "SPELL_CAST_SUCCESS",
+    CastAnnounce = beat,
+--  FadeCriteria = ,
+--  FadeAnnounce = ,
+--  TankCriteria = ,
+    
+  },
+
+  [187614] = {
+--  Item
+--  Thorasus, the Stone Heart of Draenor
+    SpellID = "187614",
+    CastCriteria = "SPELL_CAST_SUCCESS",
+    CastAnnounce = beat,
+--  FadeCriteria = ,
+--  FadeAnnounce = ,
+--  TankCriteria = ,
+    
+  },
+
+  [187613] = {
+--  Item
+--  Sanctus, Sigil of the Unbroken
+    SpellID = "187613",
+    CastCriteria = "SPELL_CAST_SUCCESS",
+    CastAnnounce = beat,
+--  FadeCriteria = ,
+--  FadeAnnounce = ,
+--  TankCriteria = ,
+    
+  },  
  
 }
 
