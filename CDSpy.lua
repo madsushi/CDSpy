@@ -20,6 +20,8 @@ local drink             = "%s drinks a %s!"
 local beat              = "%s beats %s!"
 local use_on            = "%s uses %s on %s!"
 local cast_on           = "%s casts %s on %s!"
+local awaken            = "%s awakens %s!"
+
  
 -- FadeAnnounce
 local fade_from_target  = "%s's %s fades from %s!" -- healer-style
@@ -1350,7 +1352,7 @@ local SpellArray = {
 --  Maalus, the Blood Drinker
     SpellID = "187615",
     CastCriteria = "SPELL_CAST_SUCCESS",
-    CastAnnounce = beat,
+    CastAnnounce = awaken,
 --  FadeCriteria = ,
 --  FadeAnnounce = ,
 --  TankCriteria = ,
@@ -1362,7 +1364,7 @@ local SpellArray = {
 --  Nithramus, the All-Seer
     SpellID = "187611",
     CastCriteria = "SPELL_CAST_SUCCESS",
-    CastAnnounce = beat,
+    CastAnnounce = awaken,
 --  FadeCriteria = ,
 --  FadeAnnounce = ,
 --  TankCriteria = ,
@@ -1374,7 +1376,7 @@ local SpellArray = {
 --  Etheralus, the Eternal Reward
     SpellID = "187612",
     CastCriteria = "SPELL_CAST_SUCCESS",
-    CastAnnounce = beat,
+    CastAnnounce = awaken,
 --  FadeCriteria = ,
 --  FadeAnnounce = ,
 --  TankCriteria = ,
@@ -1386,7 +1388,7 @@ local SpellArray = {
 --  Thorasus, the Stone Heart of Draenor
     SpellID = "187614",
     CastCriteria = "SPELL_CAST_SUCCESS",
-    CastAnnounce = beat,
+    CastAnnounce = awaken,
 --  FadeCriteria = ,
 --  FadeAnnounce = ,
 --  TankCriteria = ,
@@ -1398,7 +1400,7 @@ local SpellArray = {
 --  Sanctus, Sigil of the Unbroken
     SpellID = "187613",
     CastCriteria = "SPELL_CAST_SUCCESS",
-    CastAnnounce = beat,
+    CastAnnounce = awaken,
 --  FadeCriteria = ,
 --  FadeAnnounce = ,
 --  TankCriteria = ,
